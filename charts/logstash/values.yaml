@@ -1,6 +1,31 @@
 # Default values for logstash.
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
+image:
+  repository: docker.elastic.co/logstash/logstash
+  tag: 8.11.1
+
+resources:
+  requests:
+    memory: 256Mi
+  limits:
+    memory: 512Mi
+
+service:
+  type: ClusterIP
+  port: 5044
+
+config:
+  logstash.conf: |
+    input {
+      tcp { port => 5044 }
+    }
+    output {
+      elasticsearch {
+        hosts => ["http://elasticsearch:9200"]
+        index => "secops-logs-%{+YYYY.MM.dd}"
+      }
+    }
 
 # This will set the replicaset count more information can be found here: https://kubernetes.io/docs/concepts/workloads/controllers/replicaset/
 replicaCount: 1

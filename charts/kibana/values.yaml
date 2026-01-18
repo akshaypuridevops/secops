@@ -1,6 +1,32 @@
 # Default values for kibana.
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
+image:
+  repository: docker.elastic.co/kibana/kibana
+  tag: 8.11.1
+
+env:
+  - name: ELASTICSEARCH_HOSTS
+    value: http://elasticsearch:9200
+
+resources:
+  requests:
+    memory: 512Mi
+  limits:
+    memory: 1Gi
+
+service:
+  type: ClusterIP
+  port: 5601
+
+ingress:
+  enabled: true
+  className: nginx
+  hosts:
+    - host: kibana.secops.local
+      paths:
+        - path: /
+          pathType: Prefix
 
 # This will set the replicaset count more information can be found here: https://kubernetes.io/docs/concepts/workloads/controllers/replicaset/
 replicaCount: 1

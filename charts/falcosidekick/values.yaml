@@ -1,25 +1,36 @@
-# Default values for falco.
+# Default values for falcosidekick.
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
-enabled: true
+replicaCount: 1
 
-daemonset:
-  securityContext:
-    privileged: true
-  hostPID: true
-  hostNetwork: true
-  tolerations:
-    - key: "node-role.kubernetes.io/master"
-      effect: "NoSchedule"
+image:
+  repository: falcosecurity/falcosidekick
+  tag: latest
 
 resources:
   requests:
-    memory: 256Mi
+    memory: 128Mi
   limits:
-    memory: 512Mi
-webhook:
-  enabled: true
-  url: http://falcosidekick:2801
+    memory: 256Mi
+
+env:
+  - name: FALCO_URL
+    value: "http://falco:8765" # Falco webhook endpoint
+  - name: SLACK_WEBHOOK_URL
+    value: "" # add if you want Slack alerts
+  - name: ELASTICSEARCH_URL
+    value: "http://elasticsearch:9200"
+  - name: THEHIVE_URL
+    value: "http://thehive:9000"
+  - name: THEHIVE_API_KEY
+    value: "admin-key"
+
+service:
+  type: ClusterIP
+  port: 2801
+
+ingress:
+  enabled: false
 
 # This will set the replicaset count more information can be found here: https://kubernetes.io/docs/concepts/workloads/controllers/replicaset/
 replicaCount: 1

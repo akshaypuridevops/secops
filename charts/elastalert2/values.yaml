@@ -1,25 +1,27 @@
-# Default values for falco.
+# Default values for elastalert2.
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
-enabled: true
-
-daemonset:
-  securityContext:
-    privileged: true
-  hostPID: true
-  hostNetwork: true
-  tolerations:
-    - key: "node-role.kubernetes.io/master"
-      effect: "NoSchedule"
+image:
+  repository: bitsensor/elastalert2
+  tag: latest
 
 resources:
   requests:
-    memory: 256Mi
+    memory: 128Mi
   limits:
-    memory: 512Mi
-webhook:
-  enabled: true
-  url: http://falcosidekick:2801
+    memory: 256Mi
+
+elasticsearch:
+  host: elasticsearch
+  port: 9200
+
+rules:
+  - name: falco-alerts
+    type: frequency
+    index: "secops-logs-*"
+    num_events: 1
+    timeframe:
+      minutes: 1
 
 # This will set the replicaset count more information can be found here: https://kubernetes.io/docs/concepts/workloads/controllers/replicaset/
 replicaCount: 1

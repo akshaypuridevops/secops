@@ -1,0 +1,5 @@
+*.log
+*.swp
+charts/**/charts
+charts/**/Chart.lock
+.env

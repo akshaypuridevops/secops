@@ -1,0 +1,4 @@
+global:
+  namespace: secops
+  environment: prod
+

@@ -1,7 +1,7 @@
-{{- define "elastalert2.name" -}}
+{{- define "elasticsearch.name" -}}
 {{ .Chart.Name }}
 {{- end }}
 
-{{- define "elastalert2.fullname" -}}
+{{- define "elasticsearch.fullname" -}}
 {{ .Release.Name }}-{{ .Chart.Name }}
 {{- end }}

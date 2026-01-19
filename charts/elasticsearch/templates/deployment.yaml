@@ -1,21 +1,21 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "elastalert2.fullname" . }}
+  name: {{ include "elasticsearch.fullname" . }}
   labels:
-    app: {{ include "elastalert2.name" . }}
+    app: {{ include "elasticsearch.name" . }}
 spec:
   replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
-      app: {{ include "elastalert2.name" . }}
+      app: {{ include "elasticsearch.name" . }}
   template:
     metadata:
       labels:
-        app: {{ include "elastalert2.name" . }}
+        app: {{ include "elasticsearch.name" . }}
     spec:
       containers:
-        - name: elastalert2
+        - name: elasticsearch
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:

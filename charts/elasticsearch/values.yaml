@@ -1,7 +1,7 @@
 replicaCount: 1
 
 image:
-  repository: kibana/kibana
+  repository: elasticsearch/elasticsearch
   tag: latest
   pullPolicy: IfNotPresent
 

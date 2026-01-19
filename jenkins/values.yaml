@@ -1,0 +1,18 @@
+controller:
+  adminUser: admin
+  adminPassword: admin123
+
+  serviceType: NodePort
+  nodePort: 30080
+
+  installPlugins:
+    - kubernetes
+    - workflow-aggregator
+    - git
+    - github
+    - helm
+    - pipeline-stage-view
+
+persistence:
+  enabled: true
+  size: 8Gi

@@ -6,12 +6,12 @@ controller:
   serviceType: NodePort
   nodePort: 30080
 
+  # Plugins to enable pipelines, git, github integration
   installPlugins:
     - kubernetes
     - workflow-aggregator
     - git
     - github
-    - helm
     - pipeline-stage-view
 
   resources:
@@ -22,7 +22,9 @@ controller:
       cpu: "1"
       memory: "1Gi"
 
+  JCasC:
+    configScripts: {}
+
 persistence:
-  enabled: true
-  size: 8Gi
+  enabled: false   # KIND is ephemeral
 

@@ -3,17 +3,21 @@ set -e
 
 echo "🚀 Bootstrapping Jenkins"
 
-# Create namespace
-kubectl apply -f jenkins/namespace.yaml
+# Ensure we are in repo root
+REPO_ROOT=$(pwd)
+echo "Repo root: $REPO_ROOT"
 
-# Add Helm repo and update
+# Apply namespace
+kubectl apply -f "$REPO_ROOT/jenkins/namespace.yaml"
+
+# Add Helm repo
 helm repo add jenkins https://charts.jenkins.io
 helm repo update
 
-# Install / upgrade Jenkins using KIND-specific values
+# Install/upgrade Jenkins using KIND values.yaml
 helm upgrade --install jenkins jenkins/jenkins \
   -n jenkins \
-  -f ../environments/kind/jenkins-values.yaml
+  -f "$REPO_ROOT/environments/kind/jenkins-values.yaml"
 
 # Wait for rollout
 kubectl rollout status statefulset/jenkins -n jenkins
